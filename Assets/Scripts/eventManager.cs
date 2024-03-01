@@ -5,19 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class eventManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void loadLevel1(){
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("Level 1");
+    }
+    public void loadMenuLevel(){
+        SceneManager.LoadScene("Menu Level");
+    }
+    public void showAbout(){
+
+    }
+    public void exitWindow(){
+        Application.Quit();
     }
 }
