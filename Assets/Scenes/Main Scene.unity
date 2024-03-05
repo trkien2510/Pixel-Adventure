@@ -204,7 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1370ec347105624b999c4f29b102216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transition: {fileID: 0}
 --- !u!1 &295493372
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,7 +239,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 430, y: -200}
+  m_AnchoredPosition: {x: 887, y: -484}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &295493374
@@ -373,7 +372,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -200}
+  m_AnchoredPosition: {x: -865, y: -475}
   m_SizeDelta: {x: 96, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308560395
@@ -799,7 +798,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314676834}
   m_CullTransparentMesh: 1
---- !u!1001 &1465202804
+--- !u!1001 &1591741671
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -850,10 +849,6 @@ PrefabInstance:
     - target: {fileID: 5396972189410767030, guid: da2f9fb6bed3cef4e98af35cf5b25ef9, type: 3}
       propertyPath: m_Name
       value: Background Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 5396972189410767030, guid: da2f9fb6bed3cef4e98af35cf5b25ef9, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1022,7 +1017,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1591741671}
   - {fileID: 994460895}
-  - {fileID: 1465202804}
   - {fileID: 630005184}
   - {fileID: 76583487}
