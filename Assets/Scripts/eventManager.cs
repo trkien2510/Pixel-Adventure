@@ -14,20 +14,8 @@ public class eventManager : MonoBehaviour
     public void loadMainScene(){
         SceneManager.LoadScene("Main Scene");
     }
-    public void loadMenuLevel(){
-        SceneManager.LoadScene("Menu Level");
-    }
-    public void loadLevel1(){
-        SceneManager.LoadScene("Level 1");
-    }
-    public void loadLevel2(){
-        SceneManager.LoadScene("Level 2");
-    }
-    public void loadLevel3(){
-        SceneManager.LoadScene("Level 3");
-    }
-    public void openFB(){
-        Application.OpenURL("https://www.facebook.com/TrungKien25102k3");
+    public void loadLevel(int index){
+        SceneManager.LoadScene("Level " + index);
     }
     public void exitWindow(){
         Application.Quit();
