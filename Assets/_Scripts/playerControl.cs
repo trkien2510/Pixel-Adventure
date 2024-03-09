@@ -9,16 +9,25 @@ public class playerControl : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private float horizontal;
-    private bool canJump;
-    private bool isFacingRight = true;
-    [SerializeField] private int jumpCount = 2;
-    [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float jumpStrength = 10f;
-    [SerializeField] private Transform pointGround;
-    [SerializeField] private Transform pointWallCheckFront;
     [SerializeField] private LayerMask ground;
 
-    void Start()
+    [Header("for running")]
+    private bool isFacingRight = true;
+    [SerializeField] private float moveSpeed = 4f;
+
+    [Header("for jumping")]
+    private bool isGround;
+    private int jumpCount;
+    [SerializeField] private float jumpStrength = 10f;
+    [SerializeField] private Transform pointGround;
+
+    [Header("for sliding wall")]
+    private bool canSlideWall;
+    private bool isWall;
+    private bool isSlidingWall;
+    [SerializeField] private Transform checkWall;
+
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -26,7 +35,8 @@ public class playerControl : MonoBehaviour
 
     void Update()
     {
-        canJump = Physics2D.OverlapCircle(pointGround.position, 0.08f, ground);
+        isGround = Physics2D.OverlapCircle(pointGround.position, 0.1f, ground);
+        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.08f, 0.5f), 0, ground);
         
         horizontal = Input.GetAxisRaw("Horizontal");
 
@@ -34,7 +44,9 @@ public class playerControl : MonoBehaviour
 
         jump();
 
-        climbWall();
+        falling();
+
+        slidingWall();
     }
 
     private void runing()
@@ -44,7 +56,7 @@ public class playerControl : MonoBehaviour
             flip();
         }
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
-        if (canJump)
+        if (isGround)
         {
             anim.SetFloat("isRuning", Mathf.Abs(horizontal));
         }
@@ -57,7 +69,7 @@ public class playerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount != 0 || Input.GetKeyDown(KeyCode.UpArrow) && jumpCount != 0)
         {
-            if (jumpCount == 2)
+            if (jumpCount == 2 && isGround)
             {
                 anim.SetBool("isJumping", true);
             }
@@ -70,7 +82,7 @@ public class playerControl : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             jumpCount--;
         }
-        if (canJump && rb.velocity.y == 0)
+        if (isGround && rb.velocity.y == 0)
         {
             if (jumpCount == 1)
             {
@@ -86,9 +98,48 @@ public class playerControl : MonoBehaviour
             }
         }
     }
-    private void climbWall()
+    private void falling()
     {
+        if (!isGround && rb.velocity.y < 0 && !isSlidingWall)
+        {
+            anim.SetBool("isFalling", true);
+        }
+        else
+        {
+            anim.SetBool("isFalling", false);
+        }
+    }
+    private void slidingWall()
+    {
+        if (!isGround && !isWall)
+        {
+            canSlideWall = true;
+        }else
+        {
+            canSlideWall = false;
+        }
         
+        if (!isGround && isWall)
+        {
+            if (canSlideWall)
+            {
+                flip();
+                checkWall.localPosition = new Vector3(-checkWall.localPosition.x, checkWall.localPosition.y, 0);
+            }
+            rb.velocity = new Vector2(rb.velocity.x, 0.2f);
+            anim.SetBool("isSlidingWall", true);
+            isSlidingWall = true;
+        }
+        if (!isWall || isGround)
+        {
+            checkWall.localPosition = new Vector3(Mathf.Abs(checkWall.localPosition.x), checkWall.localPosition.y, 0);
+            anim.SetBool("isSlidingWall", false);
+            isSlidingWall = false;
+        }
+        if (isSlidingWall && isGround)
+        {
+            isSlidingWall = false;
+        }
     }
 
     private void flip()

@@ -696,14 +696,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4daec8587cc9ca46b08708c96708a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpCount: 2
-  moveSpeed: 4
-  jumpStrength: 10
-  pointGround: {fileID: 1944973585}
-  pointWallCheckFront: {fileID: 1764791051}
   ground:
     serializedVersion: 2
     m_Bits: 8
+  moveSpeed: 4
+  jumpStrength: 10
+  pointGround: {fileID: 1944973585}
+  checkWall: {fileID: 1764791051}
 --- !u!1 &1764791050
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,7 +713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764791051}
   m_Layer: 0
-  m_Name: pointWallCheckFront
+  m_Name: pointWallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
