@@ -9,15 +9,17 @@ public class playerControl : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private float horizontal;
+    private int number;
     [SerializeField] private LayerMask ground;
 
     [Header("for running")]
     private bool isFacingRight = true;
     [SerializeField] private float moveSpeed = 4f;
 
-    [Header("for jumping")]
+    [Header("for jump")]
     private bool isGround;
     private int jumpCount;
+    private int wallJumpCount;
     [SerializeField] private float jumpStrength = 10f;
     [SerializeField] private Transform pointGround;
 
@@ -35,14 +37,16 @@ public class playerControl : MonoBehaviour
 
     void Update()
     {
-        isGround = Physics2D.OverlapCircle(pointGround.position, 0.1f, ground);
-        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.08f, 0.5f), 0, ground);
+        isGround = Physics2D.OverlapBox(pointGround.position, new Vector2(0.4f, 0.2f), 0, ground);
+        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.15f, 0.5f), 0, ground);
         
         horizontal = Input.GetAxisRaw("Horizontal");
 
         runing();
 
         jump();
+
+        wallJump();
 
         falling();
 
@@ -69,6 +73,10 @@ public class playerControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount != 0 || Input.GetKeyDown(KeyCode.UpArrow) && jumpCount != 0)
         {
+            if (!isGround)
+            {
+                jumpCount = 1;
+            }
             if (jumpCount == 2 && isGround)
             {
                 anim.SetBool("isJumping", true);
@@ -78,26 +86,55 @@ public class playerControl : MonoBehaviour
                 anim.SetBool("isJumping", false);
                 anim.SetBool("isDoubleJumping", true);
             }
-
             rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             jumpCount--;
         }
+
         if (isGround && rb.velocity.y == 0)
         {
+            anim.SetBool("isJumping", false);
+            anim.SetBool("isFalling", false);
+            anim.SetBool("isDoubleJumping", false);
             if (jumpCount == 1)
             {
-                anim.SetBool("isJumping", false);
-                anim.SetBool("isDoubleJumping", false);
                 jumpCount = 2;
             }
             if (jumpCount == 0)
             {
-                anim.SetBool("isJumping", false);
-                anim.SetBool("isDoubleJumping", false);
                 jumpCount = 2;
             }
         }
     }
+    private void wallJump()
+    {
+        if (isSlidingWall)
+        {
+            jumpCount = 0;
+            wallJumpCount = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Space) && wallJumpCount != 0 || Input.GetKeyDown(KeyCode.UpArrow) && wallJumpCount != 0)
+        {
+            if (isWall)
+            {
+                flip();
+                isWall = false;
+            }
+            
+            if (wallJumpCount == 2)
+            {
+                anim.SetBool("isJumping", true);
+                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+            }
+            if (wallJumpCount == 1)
+            {
+                anim.SetBool("isJumping", false);
+                anim.SetBool("isDoubleJumping", true);
+                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+            }
+            wallJumpCount--;
+        }
+    }
+
     private void falling()
     {
         if (!isGround && rb.velocity.y < 0 && !isSlidingWall)
@@ -130,14 +167,10 @@ public class playerControl : MonoBehaviour
             anim.SetBool("isSlidingWall", true);
             isSlidingWall = true;
         }
-        if (!isWall || isGround)
+        if (!isWall || isGround && isSlidingWall)
         {
             checkWall.localPosition = new Vector3(Mathf.Abs(checkWall.localPosition.x), checkWall.localPosition.y, 0);
             anim.SetBool("isSlidingWall", false);
-            isSlidingWall = false;
-        }
-        if (isSlidingWall && isGround)
-        {
             isSlidingWall = false;
         }
     }
