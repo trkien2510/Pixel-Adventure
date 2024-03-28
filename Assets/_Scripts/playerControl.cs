@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR;
 
-public class playerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
     private float horizontal;
-    private int number;
     [SerializeField] private LayerMask ground;
 
-    [Header("for running")]
+    [Header("for run")]
     private bool isFacingRight = true;
     [SerializeField] private float moveSpeed = 4f;
 
-    [Header("for jump")]
+    [Header("for jump and wall jump")]
     private bool isGround;
     private int jumpCount;
     private int wallJumpCount;
@@ -26,7 +25,7 @@ public class playerControl : MonoBehaviour
     [Header("for sliding wall")]
     private bool canSlideWall;
     private bool isWall;
-    private bool isSlidingWall;
+    private bool wallSliding;
     [SerializeField] private Transform checkWall;
 
     void Awake()
@@ -38,22 +37,22 @@ public class playerControl : MonoBehaviour
     void Update()
     {
         isGround = Physics2D.OverlapBox(pointGround.position, new Vector2(0.4f, 0.2f), 0, ground);
-        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.15f, 0.5f), 0, ground);
+        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.15f, 0.7f), 0, ground);
         
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        runing();
+        Run();
 
-        jump();
+        Jump();
 
-        wallJump();
+        WallJump();
 
-        falling();
+        Falling();
 
-        slidingWall();
+        WallSlide();
     }
 
-    private void runing()
+    private void Run()
     {
         if (horizontal < 0f && isFacingRight || horizontal > 0f && !isFacingRight)
         {
@@ -69,7 +68,7 @@ public class playerControl : MonoBehaviour
             anim.SetFloat("isRuning", 0);
         }
     }
-    private void jump()
+    private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount != 0 || Input.GetKeyDown(KeyCode.UpArrow) && jumpCount != 0)
         {
@@ -105,9 +104,9 @@ public class playerControl : MonoBehaviour
             }
         }
     }
-    private void wallJump()
+    private void WallJump()
     {
-        if (isSlidingWall)
+        if (wallSliding)
         {
             jumpCount = 0;
             wallJumpCount = 2;
@@ -123,21 +122,20 @@ public class playerControl : MonoBehaviour
             if (wallJumpCount == 2)
             {
                 anim.SetBool("isJumping", true);
-                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             }
             if (wallJumpCount == 1)
             {
                 anim.SetBool("isJumping", false);
                 anim.SetBool("isDoubleJumping", true);
-                rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             }
+            rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
             wallJumpCount--;
         }
     }
 
-    private void falling()
+    private void Falling()
     {
-        if (!isGround && rb.velocity.y < 0 && !isSlidingWall)
+        if (!isGround && rb.velocity.y < 0 && !wallSliding)
         {
             anim.SetBool("isFalling", true);
         }
@@ -146,7 +144,7 @@ public class playerControl : MonoBehaviour
             anim.SetBool("isFalling", false);
         }
     }
-    private void slidingWall()
+    private void WallSlide()
     {
         if (!isGround && !isWall)
         {
@@ -165,13 +163,13 @@ public class playerControl : MonoBehaviour
             }
             rb.velocity = new Vector2(rb.velocity.x, 0.2f);
             anim.SetBool("isSlidingWall", true);
-            isSlidingWall = true;
+            wallSliding = true;
         }
-        if (!isWall || isGround && isSlidingWall)
+        if (!isWall || isGround && wallSliding)
         {
             checkWall.localPosition = new Vector3(Mathf.Abs(checkWall.localPosition.x), checkWall.localPosition.y, 0);
             anim.SetBool("isSlidingWall", false);
-            isSlidingWall = false;
+            wallSliding = false;
         }
     }
 

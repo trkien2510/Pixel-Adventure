@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class eventManager : MonoBehaviour
+public class EventManager : MonoBehaviour
 {
-    public void loadNextBuildIndex(){
+    public void LoadNextBuildIndex(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public void loadBackBuildIndex(){
+    public void LoadBackBuildIndex(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-    public void loadMainScene(){
+    public void LoadMainScene(){
         SceneManager.LoadScene("Main Scene");
     }
-    public void loadLevel(int index){
+    public void LoadLevel(int index){
         SceneManager.LoadScene("Level " + index);
     }
-    public void exitWindow(){
+    public void ExitWindow(){
         Application.Quit();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class backgroundManager : MonoBehaviour
+public class BackgroundManager : MonoBehaviour
 {
     [SerializeField] private List<GameObject> backGrounds = new List<GameObject>();
     void Start()

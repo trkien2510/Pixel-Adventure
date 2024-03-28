@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraControl : MonoBehaviour
+public class CameraControl : MonoBehaviour
 {
     Transform target;
-    Vector3 positonOffset = new Vector3(0, 0, -10);
+    Vector3 positonOffset = new(0, 0, -10);
 
     void Start()
     {

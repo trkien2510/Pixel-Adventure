@@ -392,7 +392,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 76583488}
         m_TargetAssemblyTypeName: eventManager, Assembly-CSharp
-        m_MethodName: exitWindow
+        m_MethodName: ExitWindow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1020,7 +1020,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1480486036}
         m_TargetAssemblyTypeName: eventManager, Assembly-CSharp
-        m_MethodName: loadLevel
+        m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1323,7 +1323,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1480486036}
         m_TargetAssemblyTypeName: eventManager, Assembly-CSharp
-        m_MethodName: loadLevel
+        m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2154,7 +2154,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1480486036}
         m_TargetAssemblyTypeName: eventManager, Assembly-CSharp
-        m_MethodName: loadLevel
+        m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
