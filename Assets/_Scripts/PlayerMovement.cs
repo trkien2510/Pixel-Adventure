@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.XR;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
@@ -56,7 +52,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (horizontal < 0f && isFacingRight || horizontal > 0f && !isFacingRight)
         {
-            flip();
+            Flip();
         }
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
         if (isGround)
@@ -115,7 +111,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (isWall)
             {
-                flip();
+                Flip();
                 isWall = false;
             }
             
@@ -158,7 +154,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (canSlideWall)
             {
-                flip();
+                Flip();
                 checkWall.localPosition = new Vector3(-checkWall.localPosition.x, checkWall.localPosition.y, 0);
             }
             rb.velocity = new Vector2(rb.velocity.x, 0.2f);
@@ -173,7 +169,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void flip()
+    private void Flip()
     {
         transform.localScale = new Vector3(-transform.localScale.x, 1, 0);
         isFacingRight = !isFacingRight;

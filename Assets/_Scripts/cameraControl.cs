@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraControl : MonoBehaviour
@@ -14,6 +12,7 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
-        transform.position = target.position + positonOffset;
+        Vector3 CameraPosition = target.position;
+        transform.position = CameraPosition + positonOffset;
     }
 }
