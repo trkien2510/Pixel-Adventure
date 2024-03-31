@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isFacingRight = true;
     [SerializeField] private float moveSpeed = 4f;
 
-    [Header("for jump and wall jump")]
+    [Header("for all jump")]
     private bool isGround;
     private int jumpCount;
     private int wallJumpCount;
@@ -173,5 +173,13 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.localScale = new Vector3(-transform.localScale.x, 1, 0);
         isFacingRight = !isFacingRight;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+        }
     }
 }

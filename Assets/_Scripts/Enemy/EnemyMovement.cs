@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     float moveSpeed = 3f;
-    float moveRange = 2f;
+    float moveRange;
     float currentPosition;
     int horizontal;
     bool isFacingRight = true;
@@ -21,6 +21,8 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         ChangeMove();
+
+        moveRange = GetComponent<BoxCollider2D>().enabled ? 2f : 100f;
     }
     private void Run()
     {
