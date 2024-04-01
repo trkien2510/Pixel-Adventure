@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
     float moveSpeed = 3f;
     float moveRange;
@@ -18,7 +19,7 @@ public class EnemyMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         StartCoroutine(RandomMove());
     }
-    private void Update()
+    void Update()
     {
         ChangeMove();
 
@@ -30,16 +31,7 @@ public class EnemyMovement : MonoBehaviour
         {
             Flip();
         }
-        if (horizontal != 0)
-        {
-            rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
-            anim.SetFloat("isRuning", Mathf.Abs(horizontal));
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, 0);
-            anim.SetFloat("isRuning", 0);
-        }
+        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
     }
     private void ChangeMove()
     {
