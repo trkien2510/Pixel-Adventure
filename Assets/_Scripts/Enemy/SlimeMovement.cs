@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
@@ -21,6 +20,11 @@ public class NewBehaviourScript : MonoBehaviour
     }
     void Update()
     {
+        if (rb != null)
+        {
+            rb.gravityScale = 1.5f;
+        }
+
         ChangeMove();
 
         moveRange = GetComponent<BoxCollider2D>().enabled ? 2f : 100f;

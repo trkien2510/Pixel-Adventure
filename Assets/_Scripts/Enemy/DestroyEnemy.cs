@@ -24,7 +24,7 @@ public class DestroyEnemy : MonoBehaviour
     {
         GetComponent<CapsuleCollider2D>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
-        rb.velocity = new Vector2 (0, 6f);
+        rb.velocity = Vector2.up * 6f;
         yield return new WaitForSeconds(0.1f);
         Anim.SetBool("isDead", false);
         GetComponent<SpriteRenderer>().sprite = img;

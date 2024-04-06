@@ -20,6 +20,11 @@ public class MushroomMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (rb != null)
+        {
+            rb.gravityScale = 1.5f;
+        }
+
         ChangeMove();
 
         moveRange = GetComponent<BoxCollider2D>().enabled ? 2f : 100f;

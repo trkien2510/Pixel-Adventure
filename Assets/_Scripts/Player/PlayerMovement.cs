@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("for run")]
     private bool isFacingRight = true;
-    [SerializeField] private float moveSpeed = 4f;
+    [SerializeField] private float moveSpeed = 5f;
 
     [Header("for all jump")]
     private bool isGround;
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGround = Physics2D.OverlapBox(pointGround.position, new Vector2(0.4f, 0.2f), 0, ground);
-        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.15f, 0.7f), 0, ground);
+        isWall = Physics2D.OverlapBox(checkWall.position, new Vector2(0.15f, 0.1f), 0, ground);
         
         horizontal = Input.GetAxisRaw("Horizontal");
 

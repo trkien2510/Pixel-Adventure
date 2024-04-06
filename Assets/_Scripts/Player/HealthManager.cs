@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
@@ -10,6 +13,7 @@ public class HealthManager : MonoBehaviour
     Animator anim;
     Renderer Renderer;
     GameObject Heart;
+    [SerializeField] Image[] images;
 
     private void Start()
     {
@@ -19,12 +23,22 @@ public class HealthManager : MonoBehaviour
         Renderer = GetComponent<Renderer>();
         Heart = GameObject.FindGameObjectWithTag("Heart");
     }
+    private void Update()
+    {
+        for (int i = 0; i < currentHealth; i++)
+        {
+            images[i].enabled = true;
+            if (currentHealth < 3)
+            {
+                images[currentHealth].enabled = false;
+            }
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy") && canTakeDamage)
         {
             TakeDamage();
-            StartCoroutine(WaitForTakeDamage());
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -34,9 +48,14 @@ public class HealthManager : MonoBehaviour
             Healing();
             Heart.SetActive(false);
         }
+        if (collision.CompareTag("Trap") && canTakeDamage)
+        {
+            TakeDamage();
+        }
     }
     void TakeDamage()
     {
+        canTakeDamage = false;
         currentHealth -= 1;
         if (currentHealth <= 0)
         {
@@ -47,21 +66,21 @@ public class HealthManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(WaitEndAnim(anim, "damaged"));   
+            StartCoroutine(WaitEndAnim(anim, "damaged"));
+            StartCoroutine(WaitForTakeDamage());
         }
     }
     void Healing()
     {
         currentHealth += 1;
-        if (currentHealth >= 3)
+        if (currentHealth > 3)
         {
             currentHealth = 3;
         }
     }
     IEnumerator WaitForTakeDamage()
     {
-        canTakeDamage = false;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         canTakeDamage = true;
     }
     IEnumerator WaitToDead()
