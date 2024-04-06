@@ -46,7 +46,6 @@ public class HealthManager : MonoBehaviour
         if (collision.CompareTag("Heart"))
         {
             Healing();
-            Heart.SetActive(false);
         }
         if (collision.CompareTag("Trap") && canTakeDamage)
         {

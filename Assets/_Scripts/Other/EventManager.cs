@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class EventManager : MonoBehaviour
 {
+    public void ReloadLevel()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     public void LoadNextBuildIndex(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -14,6 +19,14 @@ public class EventManager : MonoBehaviour
     }
     public void LoadLevel(int index){
         SceneManager.LoadScene("Level " + index);
+    }
+    public void PauseScene()
+    {
+        Time.timeScale = 0;
+    }
+    public void PlayScene()
+    {
+        Time.timeScale = 1;
     }
     public void ExitWindow(){
         Application.Quit();
